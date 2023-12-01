@@ -1,0 +1,24 @@
+<div class="top" style="padding-top:50px;">
+</div>
+<div class="top bottom">
+</div>
+<div id="tmadvblock2">
+  <div  class="text-center"  style="margin-top:-8px; margin-bottom:-8px;font-size:14px;"> 
+    SHOP BY BRANDS & DESIGNER
+  </div>
+
+</div>
+
+<div class="container brand">
+  <div class="raw">
+    <div class="nav navbar-nav navbar">
+      {% for link in linklists["shop-by-brand-designer"].links %}          
+      <div class="col-xs-20 col-sm-20 col-md-20 col-lg-20 text-center">
+        <div class=" brandbox">
+          <a href="{{link.url}}">{{link.title}}</a>
+        </div>
+      </div>          
+      {% endfor %}        
+    </div>
+  </div>
+</div>

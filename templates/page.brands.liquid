@@ -1,0 +1,27 @@
+<div id="page" class="brandspage">
+  <div class="text-center">
+    <h1 class="collection-header">Brands</h1>
+  </div>
+  <div class="container">
+    <div class="row">
+      {% for product_vendor in shop.vendors %}
+      {% assign product_vendor_handle = product_vendor | handle %}
+      {% assign c = collections[product_vendor_handle] %}      
+      {% if c.handle == product_vendor_handle %}
+      <div class="col-xs-12 col-sm-6 col-md-4 text-center">
+        <div class="brand">
+          {% if c.image %}
+          <a href="{{c.url}}"><img class="img-responsive" src="{{ c.image.src | collection_img_url: 'large' }}" alt ="{{c.title }}"/></a>
+          {% else %}
+          <a href="{{c.url}}"><img class="img-responsive" src="{{ c.products.first.featured_image.src | product_img_url: 'large'}}" alt="{{c.title }}"/></a>
+          {% endif %}
+          {% assign vendor_url = collections[product_vendor_handle].url %}
+          <h5>{{ product_vendor }}</h5>
+          <a class="linkvendor" href='{{c.url }}'> View All </a>
+        </div>
+      </div>
+      {% endif %}
+      {% endfor %}  
+    </div>
+  </div>
+</div>

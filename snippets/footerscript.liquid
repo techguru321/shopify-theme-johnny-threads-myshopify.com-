@@ -1,0 +1,78 @@
+{{ 'bootstrap.js' | asset_url | script_tag }}
+{{ 'option_selection.js' | shopify_asset_url | script_tag }}
+{{ 'api.jquery.js' | shopify_asset_url | script_tag }}
+{{ 'jquery.bxslider.js' | asset_url | script_tag }}
+{{ 'shopify_common.js' | shopify_asset_url | script_tag }}
+{{ 'jquery.zoom.js' | asset_url | script_tag }}
+{{ 'instafeed.js' | asset_url | script_tag }}
+{% if template contains 'customers' %}
+{{ 'customer_area.js'  | shopify_asset_url | script_tag }}
+{% endif %}
+{{ 'cart.js' | asset_url | script_tag }}
+{% include 'minicart-template' %}
+{{ 'handlebars.js' | asset_url | script_tag }}
+{{'imagesloaded.pkgd.min.js' | asset_url | script_tag }}
+<!-- Initialise Cart.js once the page has loaded -->
+<script type="text/javascript">
+  $(document).ready(function(){
+    CartJS.init({{ cart | json }});
+  });
+</script>
+{{ 'scripts.js' | asset_url | script_tag }}
+
+<script>
+  $(document).ready(function(){
+    $('.swatch-element').click(function(){        
+      $(':radio', $(this).closest('.swatch')).attr('checked', false);
+      $(':radio', $(this).closest('.swatch')).removeClass('checked');
+      $(':radio', $(this)).attr('checked', true);
+      $(':radio', $(this)).addClass('checked');
+      $(':radio', $(this)).trigger('change');
+    });
+    $('.swatch :radio').change(function() {
+      var optionIndex = $(this).closest('.swatch').attr('data-option-index');
+      var optionValue = $(this).val();      
+      $('.swatch label').removeClass('active');
+      var tmp = $(this)
+      .addClass('active')
+      .closest('form')
+      .find('.single-option-selector');
+      tmp = tmp.eq(optionIndex)
+      .val(optionValue);
+      tmp.trigger('change');
+      var lbl = tmp.next('label');
+      lbl.addClass('active');
+
+      if($('.product-image').length>0){
+        var imgurl = $('img[alt="'+optionValue+'"]', $(this).closest('.productbox')).attr('src');
+        if(typeof imgurl != 'undefined'  && imgurl != ""){
+          $('.product-image-img', $(this).closest('.productbox')).attr('src',imgurl);
+        }
+      }
+    });
+
+    if($('#productsloop').length > 0 ){
+      $('#productsloop').imagesLoaded( function() {
+        var max = 0;
+        $('.productbox').each(function(){
+          var h =  $(this).height();
+          if(h>max){max = h;}
+        });
+        $('.productbox').css('min-height', max); 
+      });
+    }
+    
+    $(window).resize(function(){
+      $('#productsloop').imagesLoaded( function() {
+        var max = 0;
+        $('.productbox').css('min-height', '0px');
+        $('.productbox').each(function(){
+          var h =  $(this).height();
+          if(h>max){max = h;}
+        });
+        $('.productbox').css('min-height', max); 
+      });
+    })
+
+  });
+</script>

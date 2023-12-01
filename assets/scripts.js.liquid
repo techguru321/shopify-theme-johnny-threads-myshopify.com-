@@ -1,0 +1,346 @@
+$(document).ready(function(){
+
+  function addItem(form_id) {
+    $.ajax({
+      type: 'POST',
+      url: '/cart/add.js',
+      dataType: 'json',
+      data: $('#'+form_id).serialize(),
+      success: Shopify.onSuccess,
+      error: Shopify.onError
+    });
+  }
+
+  $(".addtocart").click(function(e){
+
+    var elem = $(this)
+    $(elem).prop("disabled", true)
+
+    e.preventDefault();
+    addItem($(this).closest('form').attr('id'));
+
+  });
+
+  Shopify.onSuccess = function() {
+
+    var elem = $('.addtocart');
+
+    elem.removeAttr("disabled");
+
+    var quantity = parseInt(jQuery('[name="quantity"]').val(), 10) || 1;
+
+    $("html, body").animate({ scrollTop: 0 }, 2000, 'swing');
+
+    CartJS.getCart();
+    setTimeout(function(){
+      updateMiniCart();
+    },2000);
+  };
+
+  Shopify.onError = function(XMLHttpRequest, textStatus) {
+    // Shopify returns a description of the error in XMLHttpRequest.responseText.
+    // It is JSON.
+    // Example: {"description":"The product 'Amelia - Small' is already sold out.","status":500,"message":"Cart Error"}
+    var data = eval('(' + XMLHttpRequest.responseText + ')');
+    if (!!data.message) {
+      alert(data.message + '(' + data.status  + '): ' + data.description);
+    } else {
+      alert('Error : ' + Shopify.fullMessagesFromErrors(data).join('; ') + '.');
+    }
+
+    $('.addtocart').removeAttr("disabled");
+  };
+
+  Shopify.fullMessagesFromErrors = function(errors) {
+    var fullMessages = [];
+    jQuery.each(errors, function(attribute, messages) {
+      jQuery.each(messages, function(index, message) {
+        fullMessages.push(attribute + ' ' + message);
+      });
+    });
+    return fullMessages;
+  };
+
+});
+
+/* Recover password form */
+
+function getID(id){ // http://jsperf.com/getelementbyid-vs-jquery-id/44
+  return jQuery(document.getElementById(id));
+}
+
+var recoverForm = getID('customer-recover-password-form'),
+    loginForm = getID('customer-login-form');
+
+function showRecoverPasswordForm() {
+  recoverForm.parent().show();
+  loginForm.parent().hide();
+}
+
+function hideRecoverPasswordForm() {
+  recoverForm.parent().hide();
+  loginForm.parent().show();
+}
+
+$('.hide-recover-password-form').on('click', function(e){
+  hideRecoverPasswordForm();
+  e.preventDefault();
+});
+
+$('.show-recover-password-form').on('click', function(e){
+  showRecoverPasswordForm();
+  e.preventDefault();
+});
+
+// dont show links if we dont have both includes present
+if(recoverForm === null){ getID('forgotten-password-link').style.display='none'; }
+if(loginForm === null){ getID('recover-password-link').style.display='none'; }
+
+hideRecoverPasswordForm();
+if (window.location.hash === '#recover') { showRecoverPasswordForm(); }
+
+
+jQuery(window).load(function(){
+
+  $("select.loc_on_change").change(function(){
+    if($(this).attr("value") == "#") return false;
+    window.location = $(this).attr("value");
+  });
+
+});
+
+/*============================*/
+/* Update main product image. */
+/*============================*/
+var switchImage = function(newImageSrc, newImage, mainImageDomEl) {
+  // newImageSrc is the path of the new image in the same size as originalImage is sized.
+  // newImage is Shopify's object representation of the new image, with various attributes, such as scr, id, position.
+  // mainImageDomEl is the passed domElement, which has not yet been manipulated. Let's manipulate it now.
+  jQuery(mainImageDomEl).attr('src', newImageSrc);
+  {% if settings.enable_product_image_zoom %}
+  if ($(window).width() > 782) {
+    $(mainImageDomEl).parent().trigger('zoom.destroy').zoom( 
+      { url: newImageSrc.replace('_master', '') }
+    )
+  };
+  {% else %}
+  $(mainImageDomEl).parents('a').attr('href', newImageSrc);
+  {% endif %}
+};
+
+
+
+var $window = $(window);
+
+// Handlebars.js cart layout
+var items = [],
+    item = {},
+    data = {},
+    source = $("#CartTemplate").html(),
+    template = Handlebars.compile(source);
+
+var settings = {
+  moneyFormat : "{{ shop.money_format }}"
+};
+
+function updateMiniCart(){
+
+  var cart = CartJS.cart;
+  console.log(cart);
+  $("#minicart").html('');
+  items = [];
+  // Add each item to our handlebars.js data
+  $.each(cart.items, function(index, cartItem) {
+    var itemAdd = cartItem.quantity + 1,
+        itemMinus = cartItem.quantity - 1,
+        itemQty = cartItem.quantity;
+
+    if (cartItem.image != null){
+      var prodImg = cartItem.image.replace(/(\.[^.]*)$/, "_small$1").replace('http:', '');
+    } else {
+      var prodImg = "//cdn.shopify.com/s/assets/admin/no-image-medium-cc9732cb976dd349a0df1d39816fbcc7.gif";
+    }
+
+    var prodName = cartItem.title,
+        prodVariation = cartItem.variant_title;
+
+    if (prodVariation == 'Default Title') {
+      prodVariation = false;
+    }
+
+    // Create item's data object and add to 'items' array
+    item = {
+      id: index+1,
+      url: cartItem.url,
+      img: prodImg,
+      title: prodName,
+      title_variant: prodVariation,
+      quantity: itemQty,
+      line_price: Shopify.formatMoney(cartItem.price, settings.moneyFormat),        
+    };
+    items.push(item);
+  });
+
+  // Gather all cart data and add to DOM
+  data = {
+    items: items,
+    note: cart.note,
+    item_count : cart.item_count,
+    total_price: Shopify.formatMoney(cart.total_price, settings.moneyFormat)
+  }
+  $('#cartspan').html('YOUR CART: '+ cart.item_count+' Items | '+Shopify.formatMoney(cart.total_price, settings.moneyFormat));
+
+  $("#minicart").append(template(data));
+};
+
+$(document).on('click','.remove_item_minicart',function(){
+  var carti = $(this).attr('data-id');
+  CartJS.updateItem(carti, 0,{
+
+    // Define a success callback to display a success message.
+    "success": function(data, textStatus, jqXHR) {
+      setTimeout(function(){
+        updateMiniCart();
+      },2000);
+    },
+    // Define an error callback to display an error message.
+    "error": function(jqXHR, textStatus, errorThrown) {
+
+    }
+  });
+});
+
+jQuery(document).ready(function($){
+
+
+
+
+  $('#product-photo-thumbs').on({
+    click: function(e){
+      e.preventDefault();      
+      var p = $('#placeholder');
+      $('#placeholder').attr('href', $(this).attr('href'));
+      $('#placeholder img').attr('src', $(this).attr('href'))    
+      $('#placeholder .zoom-image').attr('href', $(this).attr('href'));
+      return false;
+
+    }},'.product-photo-thumb a');
+
+
+  $('#product-photo-thumbs').on({
+    mouseenter: function(e){
+      e.preventDefault();    
+      var p = $('#placeholder');
+      $('#placeholder').attr('href', $(this).attr('href'));
+      $('#placeholder img').attr('src', $(this).attr('href'))    
+      $('#placeholder .zoom-image').attr('href', $(this).attr('href'));
+      return false;
+
+    },
+    mouseleave: function (e) {
+      //stuff to do on mouse leave
+      //$(this).css({'color':'blue'});
+
+    }},'.product-photo-thumb a');
+
+  /*$('.product-photo-thumb a').hover(function(e){
+      e.preventDefault();    
+      var p = $('#placeholder');
+      $('#placeholder').attr('href', $(this).attr('href'));
+      $('#placeholder img').attr('src', $(this).attr('href'))    
+      $('#placeholder .zoom-image').attr('href', $(this).attr('href'));
+      return false;
+    }, function(){
+    });*/
+
+  $('.cloud-zoom').click(function(event) {
+    event.preventDefault();
+    event.stopPropagation();    
+  });
+
+
+
+
+  $('.mainslider .bxslider').not('.suggestedproduct').bxSlider({pager : true,infiniteLoop:true});
+  $('.suggestedproduct .bxslider').bxSlider({pager : false, mode:'fade'});
+
+  sliderProduct = $('.mobile-image-box .bxslider').bxSlider({pager : true, mode:'fade'});
+
+
+
+  var sw = 150;
+  var sm = 10;
+  var ms = Math.floor($('.carouselproducts .bxslider').width() / (sw + sm));
+
+  $('.carouselproducts .bxslider').bxSlider({
+    minSlides: 1,    
+    slideWidth: sw,
+    slideMargin: sm,
+    maxSlides: ms > 1 ? ms : 1,
+    pager:true
+  });
+
+  var sw = 150;
+  var sm = 10;
+  var ms = Math.floor($('.carouselproducts .bxslider').width() / (sw + sm));
+
+  $('.mostlikedslider .bxslider').bxSlider({
+    minSlides: 1,
+    slideWidth: sw,
+    slideMargin: sm,
+    maxSlides: ms > 1 ? ms : 1,
+  });
+
+  var scrollTop = $window.scrollTop();
+    console.log(scrollTop);
+    if(scrollTop > 0){
+      $('#navbar').addClass('nav-bg');
+    }
+    else{
+      $('#navbar').removeClass('nav-bg');
+    }
+  $window.scroll(function(){
+    var scrollTop = $window.scrollTop();
+    console.log(scrollTop);
+    if(scrollTop > 0){
+      $('#navbar').addClass('nav-bg');
+    }
+    else{
+      $('#navbar').removeClass('nav-bg');
+    }
+  });
+
+  $('#navbar-desktop .navbar-nav > li.dropdown').hover(function () {
+    //$('ul.dropdown-menu', this).stop(true, true).slideDown('slow');
+    //$(this).addClass('open');
+  }, function () {
+    //$('ul.dropdown-menu', this).stop(true, true).slideUp('fast');
+    //$(this).removeClass('open');
+  });
+
+  $('li.cartitem').not('.cart').hover(function () {
+    if($('.visible-xs').is(':visible')){
+    }
+    else{
+      $('.minicart', this).stop(true, true).slideDown('slow');    
+    }
+  }, function () {
+    $('.minicart', this).stop(true, true).slideUp('fast');    
+  });
+
+  $('li.cartitem').not('.cart').click(function () {
+    if($('.visible-xs').is(':visible')){
+      location.href="/cart";
+    }
+    else{
+
+    }
+  });
+
+
+});
+
+function fbwindowOpen(){
+  window.open("http://www.facebook.com/asburyboutique");
+}
+

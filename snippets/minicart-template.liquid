@@ -1,0 +1,55 @@
+<script id="CartTemplate" type="text/template">
+    {% raw %} {{#items}}
+    <div class="row cartitem" data-id="{{id}}">
+        <div class="col-xs-3">
+            <a href="{{ url }}">
+                <img src="{{img}}" alt="{{title}}" class="img-responsive" />
+            </a>
+        </div>
+        <div class="col-xs-7">
+            <a href="{{ url }}">
+                <small>{{ title }}</small>
+                <small class="variant_title">{{ variant_title }}</small>
+            </a>
+            <div class="cart_popup_box_label">
+                <div class="cart_popup_box_label_col1">
+                    <span class="quantity-formated">QTY: <span class="quantity" style="opacity: 1;">{{ quantity }}</span></span>
+                </div>
+                <div class="cart_popup_box_label_col3">
+                </div>
+                <div class="cart_popup_box_label_col2">
+                    <span class="price">{{ line_price }}</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-2">
+            <a class='remove_link remove_item_minicart' data-id="{{ id }}"></a>
+        </div>
+    </div>
+    {{/items}}
+
+    <div class="cart_popup_box_total_area clearfix">
+        <div class="cart_popup_box_total">
+
+            <div class="cart_popup_box_price_lable">Items</div>
+            <br>
+            <span class="ajax_cart_quantity">{{item_count}}</span>
+
+        </div>
+        <div class="cart_popup_box_shipping" style="margin-right:-20px;">
+            <div class="cart_popup_box_price_lable">Order Subtotal</div>
+            <div class="cart_popup_box_price">
+                <span class="price ajax_block_cart_total" id="cart_block_total">{{ total_price }}</span>
+            </div>
+        </div>
+    </div>
+    <div class="cart_popup_box_checkout">
+        <p id="cart-buttons" class="text-center">
+            <a class="exclusive_large" href="/cart" id="button_order_cart" title="Check out">
+                <span>
+  </span>Check out
+            </a>
+        </p>
+    </div>
+    {% endraw %}
+</script>

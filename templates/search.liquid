@@ -1,0 +1,77 @@
+<div class="text-center">
+    <h1 class="collection-header">{{ 'general.search.results_title' | t }}</h1>
+  </div>
+<div id="search" class="container">
+  {% if search.performed %}
+  {% paginate search.results by settings.pagination_limit %}
+
+  {% if search.terms == "" %}
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="search-field">
+        <div class="searchBox">
+          <form method="get" action="/search" class="pull-right">
+            <input type="hidden" name="type" value="product" />
+            <input type="text" name="q" class="q" placeholder="SEARCH">
+            <input type="submit" value="Search">
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% else %}
+
+  {% if search.results == empty %}
+  <div class="row">
+    <div class="col-xs-12">
+      <h2>{{ 'general.search.no_results_title' | t }}</h2>
+      <span class="subtext">{{ 'general.search.no_results_html' | t: search: search.terms }}</span>
+      <div class="search-field">
+        <div class="searchBox">
+          <form method="get" action="/search" class="pull-right">
+            <input type="hidden" name="type" value="product" />
+            <input type="text" name="q" class="q" placeholder="SEARCH">
+            <input type="submit" value="Search">
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% else %}
+<div id="collection">
+  
+
+  <!-- Begin results -->
+  <div class="row">
+    {% for item in search.results %}
+    {% assign product = item %}
+    {% include 'product-loop'%}
+    {% endfor %}
+  </div>
+  <!-- End results -->
+<div class="text-center">
+  {{ paginate | default_pagination }}
+  </div>
+  {% endif %}
+  {% endif %}
+
+  {% endpaginate %}
+
+  {% else %}
+
+  <div class="row">
+    <div class="col-xs-12 expanded-message">
+      <div class="search-field">
+        <div class="searchBox">
+          <form method="get" action="/search" class="pull-right">
+            <input type="text" name="q" class="q" placeholder="SEARCH">
+            <input type="submit" value="Search">
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% endif %}	
+</div> <!-- /#search -->
+</div>

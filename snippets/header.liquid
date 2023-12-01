@@ -1,0 +1,213 @@
+<nav class="navbar navbar-default hidden-xs" role="navigation" id="navbar">
+
+  <div class="container container-lg hidden-xs">
+    <div class="top-container">
+	   <ul id="header_links">  
+        <li class="follow top-links">
+          <span>FOLLOW:</span>
+          <ul class="socialLink">
+		    <li>
+              <a href="" target="_blank">
+                <img src="{{'icon-instagram.png'|asset_url}}"></a>
+            </li>
+			<li>
+              <a href="" target="_blank">
+                <img src="{{'icon-twitter.png'|asset_url}}">
+              </a>
+            </li>
+			   <li>
+              <a href="" target="_blank">
+                <img src="{{'icon-facebook.png'|asset_url}}">
+              </a>
+            </li>         
+          </ul>
+        </li>
+         <li class="sign-in top-links"><a href="//johnny-threads.myshopify.com">SIGN IN</a></li> 
+        <li class="top-links cartitem {{template}}">
+          <span id="cartspan"><a href="/cart"><img src="{{'cart-icon.png'|asset_url}}"></a> <a href="/cart"> <span class="cart-item-count">{{cart.item_count}} </span><span class="item-items">{{ cart.item_count | pluralize: 'Item', 'Items' }}(s) </span> | <span class="total-price"> {{ cart.total_price | money }}</span></a></span>
+         </li>
+         
+         <!---div class="minicart" id="minicartmy">
+
+            {% for item in cart.items %}
+            <div class="row cartitem">
+              <div class="col-xs-3">
+                <a href="{{ item.url }}">
+                  <img src="{{ item | img_url: 'small' }}"  alt="{{ item.title | escape }}"  class="img-responsive" />
+                </a>
+              </div>
+              <div class="col-xs-7" style="display: none;">
+                <a href="{{ item.url }}">
+                  <small>{{ item.product.title }}</small>
+                  {% if item.product.variants.size > 1 %}
+                  <small class="variant_title">{{ item.variant.title }}</small>
+                  {% endif %}
+                </a>
+                <div class="cart_popup_box_label">
+                  <div class="cart_popup_box_label_col1"> 
+                    <span class="quantity-formated">QTY: <span class="quantity" style="opacity: 1;">{{ item.quantity }}</span></span></div>
+                  <div class="cart_popup_box_label_col3">
+                  </div>
+                  <div class="cart_popup_box_label_col2"> 
+                    <span class="price">{{ item.line_price | money }}</span>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xs-2">
+                <a class='remove_link remove_item_minicart' data-id="{{forloop.index}}"></a>
+              </div>
+            </div>
+            {% endfor %}
+            <div class="cart_popup_box_total_area clearfix">
+              <div class="cart_popup_box_total">
+
+                <div class="cart_popup_box_price_lable">Items</div>
+                <br>
+                <span class="ajax_cart_quantity">{{cart.item_count}}</span>
+
+              </div>
+              <div class="cart_popup_box_shipping" style="margin-right:-20px;">
+                <div class="cart_popup_box_price_lable">Order Subtotal</div>
+                <div class="cart_popup_box_price">
+                  <span class="price ajax_block_cart_total" id="cart_block_total">{{ cart.total_price | money }}</span>
+                </div>
+              </div>
+            </div>
+            <div class="cart_popup_box_checkout">
+              <p id="cart-buttons" class="text-center"> 
+                <a class="exclusive_large" href="/cart" id="button_order_cart" title="Check out">
+                  <span>
+                  </span>Check out
+                </a>
+              </p>
+            </div>
+          </div-->
+        
+      </ul>
+   
+  </div>
+  <div class="row head-logo-nav-search">
+    <div class="navbar-header hidden-xs col-xs-3 col-sm-3 col-md-3 col-lg-3">      
+      <a class="navbar-brand" href="/">
+        {% if settings.use_logo %}
+        {{"logo.png" | asset_url | img_tag}}
+        {% else %}
+        {{ shop.name }}
+        {% endif %}
+      </a>
+    </div>
+ 
+    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" id="navbar-desktop">      
+        <ul class="nav navbar-nav navbar">
+          {% for link in linklists[settings.main_nav].links %}
+          {% if linklists[link.handle].links.size > 0 %}
+          <li class="dropdown ">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{link.title}}</a>
+            <ul class="dropdown-menu" role="menu">
+              <div class="temp-div"></div>
+              {% for sublink in linklists[link.handle].links %}
+              <li class="{% if sublink.active %} active {% endif %}">
+                <div>                                    
+                  {% assign  c = collections[sublink.object.handle] %}
+                  {% if c.image %}
+                  <a href="{{sublink.url}}">{{ c.image.src | collection_img_url: 'medium' | img_tag: c.title }}</a>
+                  {% else %}
+                  <a href="{{sublink.url}}">{{ c.products.first.featured_image.src | product_img_url: 'medium' | img_tag: c.title }}</a>
+                  {% endif %}
+                </div>            
+              </li>        
+              {% endfor %}
+            </ul>
+          </li>
+          {% else %}
+          <li class="{% if link.active %} active {% endif %}"><a href="{{link.url}}">{{link.title}}</a></li>        
+          {% endif %}
+          {% endfor %}        
+        </ul>
+
+      </div>
+
+
+
+   <div class="searchBox hidden-xs col-xs-3 col-sm-3 col-md-3 col-lg-3 pull-right">
+        <form method="get" action="/search">
+          <input type="hidden" name="type" value="product" />
+          <input type="text" name="q" class="q" placeholder="Search"/>
+          <input  type="submit" value="Search" />
+        </form>
+      </div>
+</div> 
+</div> 
+</nav>
+
+<!----------------------end desktop data------------------>
+<nav class="navbar navbar-default visible-xs" role="navigation" id="navbar">
+
+  <div class="navbar-header visible-xs">      
+    <div class="toggle">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-mobile" aria-expanded="false" aria-controls="navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <div class="logo">
+      <a class="navbar-brand navbar-brand-img" href="/">
+        {% if settings.use_logo %}
+        {{"logo_small.png" | asset_url | img_tag}}
+        {% else %}
+        {{ shop.name }}
+        {% endif %}
+      </a>
+    </div>
+    <div class="cart">
+
+      <ul class="nav navbar-icons visible-xs">        
+
+        <li>
+          <a href="/cart"><span class="glyphicon glyphicon-shopping-cart"></span><span class="badge">{% if {{cart.item_count}} < 10 %}{{cart.item_count}}{% else %}+{% endif %}</span></a>
+        </li>
+
+      </ul>
+
+    </div>
+  </div>
+  <div class="visible-xs">
+  <div class="navbar-collapse collapse" id="navbar-mobile">      
+    <ul class="nav navbar-nav navbar text-left"  >
+      {% for link in linklists[settings.main_nav].links %}
+      {% if linklists[link.handle].links.size > 0 %}
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{link.title}} </a>
+        <ul class="dropdown-menu" role="menu">
+          {% for sublink in linklists[link.handle].links %}
+          <li class="{% if sublink.active %} active {% endif %}">                  
+            <a href="{{sublink.url}}">{{sublink.title}}</a>                
+          </li>        
+          {% endfor %}
+        </ul>
+      </li>
+      {% else %}
+      <li class="{% if link.active %} active {% endif %}"><a href="{{link.url}}">{{link.title}}</a></li>        
+      {% endif %}
+      {% endfor %}        
+    </ul>
+
+  </div>
+  </div>
+
+   <!--/.nav-collapse -->
+</nav>
+<div class="header-space text-center {{template}} visible-xs hidden-xs">
+  <div class='searchBox'>
+    <form method="get" action="/search">
+      <input type="text" name="q" class="q" placeholder="Site Search"/>
+      <input  type="submit" value="Search" />
+
+    </form>
+  </div>
+</div>
+<div class="header-space text-center {{template}} hidden-xs">
+  <a class="top_text" href="{{settings.ad_1_bar_link}}">{{settings.ad_1_bar_text}}</a>
+</div>

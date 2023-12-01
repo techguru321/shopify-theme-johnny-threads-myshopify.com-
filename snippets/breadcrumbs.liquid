@@ -1,0 +1,24 @@
+
+<div id="breadcrumb" class="alt">
+  <div class="container">
+    &raquo; <a href="/" title="back to the frontpage">Home</a>
+    {% case template %}  
+    {% when "product" %}
+    {% if collection %}            
+    &raquo; {{ collection.title | link_to: collection.url }}
+    {% endif %}
+    &raquo; {{ product.title | link_to: product.url }}
+    {% when "collection" %}
+    &raquo; {{ collection.title | link_to: collection.url }}          
+    {% when "blog" %}
+    &raquo; {{ blog.title | link_to: blog.url }}
+    {% when "page" %}
+    &raquo; {{ page.title | link_to: page.url }}
+    {% when "article" %}
+    &raquo; {{ blog.title | link_to: blog.url }}
+    &raquo; {{ article.title | link_to: article.url }}
+    {% when "cart" %}
+    &raquo; <a href="/cart">Shopping Cart</a>
+    {% endcase %}   
+  </div>
+</div>

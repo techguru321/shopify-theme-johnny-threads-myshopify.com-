@@ -1,0 +1,325 @@
+/**
+* BxSlider v4.1.2 - Fully loaded, responsive content slider
+* http://bxslider.com
+*
+* Written by: Steven Wanderski, 2014
+* http://stevenwanderski.com
+* (while drinking Belgian ales and listening to jazz)
+*
+* CEO and founder of bxCreative, LTD
+* http://bxcreative.com
+*/
+
+
+/** RESET AND LAYOUT
+===================================*/
+.bxslider{
+  padding:0px;
+  margin:0px;
+  list-style-type:none;
+}
+.bx-wrapper {
+  position: relative;
+  margin: 0 auto 60px;
+  padding: 0;
+  *zoom: 1;
+}
+
+.bx-wrapper img {
+  max-width: 100%;
+  display: block;
+  margin: auto;
+}
+
+/** THEME
+===================================*/
+
+.bx-wrapper .bx-viewport {	
+  @media (min-width: 768px){  
+    
+
+    /*fix other elements on the page moving (on Chrome)*/
+    -webkit-transform: translatez(0);
+    -moz-transform: translatez(0);
+    -ms-transform: translatez(0);
+    -o-transform: translatez(0);
+    transform: translatez(0);
+  }
+}
+
+.bx-wrapper .bx-pager,
+.bx-wrapper .bx-controls-auto {
+  position: absolute;
+  bottom: -30px;
+  width: 100%;
+}
+
+/* LOADER */
+
+.bx-wrapper .bx-loading {
+  min-height: 50px;
+  background: url({{'bx_loader.gif'|asset_url}}) center center no-repeat #fff;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2000;
+}
+
+/* PAGER */
+
+.bx-wrapper .bx-pager {
+  text-align: center;
+  font-size: .85em;
+  font-family: Arial;
+  font-weight: bold;
+  color: #666;
+  padding-top: 20px;
+}
+
+.bx-wrapper .bx-pager .bx-pager-item,
+.bx-wrapper .bx-controls-auto .bx-controls-auto-item {
+  display: inline-block;
+  *zoom: 1;
+  *display: inline;
+}
+
+.bx-wrapper .bx-pager.bx-default-pager a {
+  background: #666;
+  text-indent: -9999px;
+  display: block;
+  width: 10px;
+  height: 10px;
+  margin: 0 5px;
+  outline: 0;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+}
+.home-slider .bx-default-pager a {  background: #666 !important;}
+.home-slider .bx-default-pager a.active, .home-slider .bx-default-pager a.hover {
+  background: #000 !important;
+}
+.mainslider.home-slider {
+    margin-bottom: 158px;
+}
+.bx-wrapper .bx-pager.bx-default-pager a:hover,
+.bx-wrapper .bx-pager.bx-default-pager a.active {
+  background: #000;
+}
+
+/* DIRECTION CONTROLS (NEXT / PREV) */
+.carouselproducts{
+  padding-left:50px;
+  padding-right:50px;
+}
+.product_slider .slick-prev,
+.carouselproducts .bx-wrapper .bx-prev {
+  left: -50px;
+  width: 30px;  
+  height:30px;
+  bottom:50%;
+  background: url({{'arrow_right_3.png'|asset_url}}) 5px center no-repeat transparent ;  
+}
+.product_slider .slick-next:before,
+.product_slider .slick-prev:before {
+    content: none;
+}
+    .product_slider .slick-next,
+.carouselproducts .bx-wrapper .bx-next {
+  right: -40px;
+  width: 30px;
+  height:30px;
+  bottom:50%;
+  background: url({{'arrow_left_3.png'|asset_url}}) 5px center no-repeat transparent;
+}
+
+.suggestedproduct .bx-wrapper .bx-prev {
+  left: 10px;
+  width: 30px;  
+  background: url({{'left-arrow.png'|asset_url}}) 5px center no-repeat transparent ;  
+}
+
+.suggestedproduct .bx-wrapper .bx-next {
+  right: 10px;
+  width: 30px;
+  background: url({{'right-arrow.png'|asset_url}}) 5px center no-repeat transparent;
+}
+
+.mainslider .bx-wrapper .bx-prev {
+  left: 10px;
+  width: 30px;
+  background: url({{'gray_prev.png'|asset_url}}) no-repeat 0px -32px;  
+  @media (min-width: 768px){    
+    background: url({{'gray_prev.png'|asset_url}}) no-repeat 0 0px;
+    width: 60px;
+    height: 146px;
+  }
+}
+
+.mainslider .bx-wrapper .bx-next {
+  right: 10px;
+  width: 30px;
+  background: url({{'gray_next.png'|asset_url}}) no-repeat -46px -32px;
+  @media (min-width: 768px){    
+    background: url({{'gray_next.png'|asset_url}}) no-repeat 0 0px;
+    width: 60px;
+    height: 146px;
+  }
+}
+
+.mobile-image-box .bx-wrapper .bx-prev {
+  bottom: 50%;
+  height: 74px;
+  margin-bottom: -37px;
+  left: 10px;
+  width: 15px;
+  background: url({{'gray_prev.png'|asset_url}}) no-repeat 0px -32px;  
+  @media (min-width: 768px){    
+    background: url({{'gray_prev.png'|asset_url}}) no-repeat 0 0px;
+    width: 60px;
+    height: 146px;
+  }
+}
+
+.mobile-image-box .bx-wrapper .bx-next {
+  bottom: 50%;
+  height: 74px;
+  margin-bottom: -37px;
+  right: 10px;
+  width: 15px;
+  background: url({{'gray_next.png'|asset_url}}) no-repeat -46px -32px;
+  @media (min-width: 768px){    
+    background: url({{'gray_next.png'|asset_url}}) no-repeat 0 0px;
+    width: 60px;
+    height: 146px;
+  }
+}
+
+.bx-wrapper .bx-prev:hover {
+
+}
+
+.bx-wrapper .bx-next:hover {
+
+}
+
+.bx-wrapper .bx-controls-direction a {
+  position: absolute;  
+  bottom:13px;
+  outline: 0;
+  width: 20px;  
+  height:15px;
+  text-indent: -9999px;
+  z-index: 9999;
+}
+
+.mainslider .bx-wrapper .bx-controls-direction a {
+  position: absolute;
+  top: 50%;
+  margin-top: -16px;
+  outline: 0;
+  width: 13px;
+  height: 146px;
+  text-indent: -9999px;
+  z-index: 9999;
+  
+  @media (min-width: 768px){    
+    background-position: 0 0px;
+    width: 45px;
+    height: 90px;
+  }
+}
+
+.bx-wrapper .bx-controls-direction a.disabled {
+  display: none;
+}
+
+/* AUTO CONTROLS (START / STOP) */
+
+.bx-wrapper .bx-controls-auto {
+  text-align: center;
+}
+
+.bx-wrapper .bx-controls-auto .bx-start {
+  display: block;
+  text-indent: -9999px;
+  width: 10px;
+  height: 11px;
+  outline: 0;
+  background: url({{'controls.png'|asset_url}}) -86px -11px no-repeat;
+  margin: 0 3px;
+
+}
+
+.bx-wrapper .bx-controls-auto .bx-start:hover,
+.bx-wrapper .bx-controls-auto .bx-start.active {
+  background-position: -86px 0;
+}
+
+.bx-wrapper .bx-controls-auto .bx-stop {
+  display: block;
+  text-indent: -9999px;
+  width: 9px;
+  height: 11px;
+  outline: 0;
+  background: url({{'controls.png'|asset_url}}) -86px -44px no-repeat;
+  margin: 0 3px;
+}
+
+.bx-wrapper .bx-controls-auto .bx-stop:hover,
+.bx-wrapper .bx-controls-auto .bx-stop.active {
+  background-position: -86px -33px;
+}
+
+/* PAGER WITH AUTO-CONTROLS HYBRID LAYOUT */
+
+.bx-wrapper .bx-controls.bx-has-controls-auto.bx-has-pager .bx-pager {
+  text-align: left;
+  width: 80%;
+}
+
+.bx-wrapper .bx-controls.bx-has-controls-auto.bx-has-pager .bx-controls-auto {
+  right: 0;
+  width: 35px;
+}
+
+/* IMAGE CAPTIONS */
+
+.bx-wrapper .bx-caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  background: #666\9;
+  background: rgba(80, 80, 80, 0.75);
+  width: 100%;
+}
+
+.bx-wrapper .bx-caption span {
+  color: #fff;
+  font-family: Arial;
+  display: block;
+  font-size: .85em;
+  padding: 10px;
+}
+.mainslider  .bx-wrapper {
+  background: none repeat scroll 0 0 #CBEFF3;
+  width: 100% !important;  
+}
+.mainslider .bx-viewport{
+  background:none;
+  @media (min-width: 768px){    
+    width:auto;
+    margin:auto;
+  }
+  @media (min-width: 992px){    
+    width:auto;
+    margin:auto;
+  }
+  @media (min-width: 1200px){    
+    width:auto;
+    margin:auto;    
+  }
+}
+

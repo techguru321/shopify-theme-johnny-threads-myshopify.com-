@@ -1,0 +1,206 @@
+<!-- home-instafeed -->
+<style>
+  .home_instagram .il-photo__likes{
+  background:url({{'heart.png' | asset_url}});
+  }
+</style>
+<div class="home_instagram" data-id="{{section.settings.instagram_client_id}}" data-like="{{section.settings.like}}" data-tag="{{section.settings.tag}}" data-limit="{{section.settings.limit}}" data-width="{{section.settings.photos_per_row}}" data-gutter="{% if section.settings.gutter %}true{% else %}false{% endif %}">
+  <div class="clearfix">
+      {% unless section.settings.text  == blank %}
+      <h3 class="text-center title">{{section.settings.text}}</h3>
+      {% endunless %}
+        <ul class="instafeed clearfix row">
+        </ul>
+  </div>
+</div>
+{% schema %}
+{
+  "name": "Instagram feed",
+  "settings": [
+    {
+      "type": "text",
+      "label": "Header text",
+      "id": "text"
+    },
+    {
+      "type": "text",
+      "id": "instagram_client_id",
+      "label": "Instagram Access Token ([?](http://outofthesandbox.com/pages/instagram-access-token))"
+    },
+	{
+	  "type": "checkbox",
+	  "id": "gutter",
+	  "label": "Gutter?",
+	  "default": true
+	},
+	{
+	  "type": "select",
+	  "id": "photos_per_row",
+	  "info": "Only for desktop view",
+	  "label": "Photos per row",
+	  "options":[
+			 {
+          "value": "col-xs-6",
+          "label": "2"
+        },
+        {
+          "value": "col-xs-4",
+          "label": "3"
+        },
+        {
+          "value": "col-xs-3",
+          "label": "4"
+        }
+	  ]
+	},
+    {
+      "type": "number",
+      "label": "Photos limit",
+      "id": "limit",
+      "default":8
+    },
+    {
+      "type": "checkbox",
+      "label": "Enable photos like",
+      "id": "like"
+    },
+    {
+      "type": "checkbox",
+      "label": "Enable photos tags",
+      "id": "tag"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Home page - Instagram feed",
+      "category": "Instagram"
+    }
+  ]
+}
+{% endschema %}
+{% stylesheet 'scss' %}
+.home_instagram{
+  ul{
+    padding:0;
+    li{
+		&.no_gutter{
+		padding:0;
+		}
+		padding-bottom: 30px;
+		&.col-sm-3{
+          &:nth-of-type(4n+1){
+            clear:both;
+        }
+      }
+      &.col-sm-4{
+          &:nth-of-type(3n+1){
+            clear:both;
+          }
+      }
+      &.col-sm-6{
+          &:nth-of-type(2n+1){
+            clear:both;
+        }
+      }
+      a{
+        display:block;
+        overflow:hidden;
+        img{
+          width:100%;
+          max-width:100%;
+          height:auto;
+          transition: all 0.8s ease;
+          -webkit-transition: all 0.8s ease;
+          -moz-transition: all 0.8s ease;
+          -o-transition: all 0.8s ease;
+          -ms-transition: all 0.8s ease;
+          &:hover{
+            transform:scale(1.03);
+            -webkit-transform:scale(1.03);
+            -moz-transform:scale(1.03);
+            -o-transform:scale(1.03);
+            -ms-transform:scale(1.03);
+          }
+        }
+      }
+      .il-photo__likes{
+        background-color: #f37429;
+        background-size: 15px;
+        background-repeat: no-repeat;
+        background-position:5px;
+        color: #fff;
+        position: absolute;
+        padding: 5px 12px 5px 25px;
+        top: 0;
+		&.no_gutter{
+		left: 0;
+		}
+        left: 15px;
+      }
+.il-photo__caption{
+padding-top:5px;
+a{
+display:inline-block;
+vertical-align:top;
+color:#2c6f80;
+}
+}
+    }
+  }
+}
+{% endstylesheet %}
+{% javascript %}
+simply.instaFeed = function(){
+	$(".home_instagram").each(function(index,item){
+	if($(".instafeed").length > 0){
+    var target = $(item) ;
+    var id = target.attr("data-id");
+    var limit = target.attr("data-limit");
+    var like =  target.attr("data-like");
+    var tag = target.attr("data-tag");
+    var width = target.attr("data-width");
+	var gutter= target.attr("data-gutter");
+	var gutterClass= "no_gutter";
+    if(limit == 0){
+      limit = 6;}
+    if(like == "false"){
+      like = false;
+    }
+    else{
+      like = true;
+    }
+    if(tag == "false"){
+      tag = false;
+    }
+    else{
+      tag = true;
+    }
+    if(!cn(id)){
+      $("ul",target).instagramLite({
+        accessToken: id,
+        urls: true,
+        limit: limit,
+        captions: tag,
+        likes: like,
+        success: function () { 
+        $("li",target).addClass(width);
+		if(gutter == "false"){
+			$("li",target).addClass(gutterClass);
+			$(".il-photo__likes",target).addClass(gutterClass);
+		}
+		else{
+			$("li",target).removeClass(gutterClass);
+		}
+        },
+        error: function() {
+          console.log('There was an error with your request.');
+        }
+      });
+    }
+	}
+});
+};
+$(document).ready(function(){
+simply.instaFeed();
+});
+{% endjavascript %}

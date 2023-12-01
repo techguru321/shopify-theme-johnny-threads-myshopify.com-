@@ -1,0 +1,134 @@
+<footer>
+  <div class="hidden-xs"> 
+    <div class="container">
+      <div class="row">        
+        <div class="footer_1">
+          <h5>{{linklists[settings.footer1].title}}</h5>
+          {% for link in linklists[settings.footer1].links %}        
+          <li class="{% if link.active %} active {% endif %}"><a href="{{link.url}}">{{link.title}}</a></li>        
+          {% endfor %}      
+        </div>
+        <div class="footer_2">
+          <h5>{{linklists[settings.footer2].title}}</h5>
+          {% for link in linklists[settings.footer2].links %}        
+          <li class="{% if link.active %} active {% endif %}"><a href="{{link.url}}">{{link.title}}</a></li>        
+          {% endfor %}      
+        </div>
+        <div class="footer_1">
+          <h5>{{linklists[settings.footer3].title}}</h5>
+          {% if customer %}
+          <li> <a href="/account/logout">Sign out</a></li>
+          {% else %}
+          <li> <a href="/account/register">Sign in</a></li>
+          {% endif %}
+
+          {% for link in linklists[settings.footer3].links %}    
+          <li class="{% if link.active %} active {% endif %}"><a href="{{link.url}}">{{link.title}}</a></li>        
+          {% endfor %}      
+        </div>      
+        <div class="visible-lg col-lg-3">
+          &nbsp;
+        </div>
+        <div class="footer_3">
+          <div class="text-right">
+            <h5>MALING LIST</h5>
+            <p>no junk, no spam, just savings<br/>
+              get 15% off now</p>
+          </div>
+          {% include 'newslettersignup' %}
+          <p class="copyright text-right">all rights reserved 2006-2023<br/>
+            Johnny Threads</p>
+        </div>
+      </div>
+    </div>  
+  </div>
+
+  <div class="visible-xs">
+
+
+    <div class="panel panel-default">
+      <div class="panel-heading" role="tab" id="headingOne">
+        <h6 class="panel-title">
+          <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+            <h5>{{linklists[settings.footer1].title}}</h5>
+          </a>
+        </h6>
+      </div>
+      <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+        <div class="panel-body">            
+          <div>
+            <ul class="list-nav">
+              {% for link in linklists[settings.footer2].links %}        
+              <li class="{% if link.active %} active {% endif %}"><a href="{{link.url}}">{{link.title}}</a></li>        
+              {% endfor %}
+            </ul>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading" role="tab" id="headingOne">
+        <h6 class="panel-title">
+          <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseOne">
+            <h5>{{linklists[settings.footer2].title}}</h5>
+          </a>
+        </h6>
+      </div>
+      <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+        <div class="panel-body">            
+          <div>
+            <ul class="list-nav">
+              {% for link in linklists[settings.footer2].links %}        
+              <li class="{% if link.active %} active {% endif %}"><a href="{{link.url}}">{{link.title}}</a></li>        
+              {% endfor %}
+            </ul>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading" role="tab" id="headingOne">
+        <h6 class="panel-title">
+          <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseOne">
+            <h5>{{linklists[settings.footer3].title}}</h5>
+          </a>
+        </h6>
+      </div>
+      <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+        <div class="panel-body">            
+          <div>
+            <ul class="list-nav">
+              {% for link in linklists[settings.footer3].links %}        
+              <li class="{% if link.active %} active {% endif %}"><a href="{{link.url}}">{{link.title}}</a></li>        
+              {% endfor %}
+            </ul>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <div class="panel panel-default">
+      <div class="panel-heading" role="tab" id="headingOne">
+        <h6 class="panel-title">
+          <a data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseOne">
+            <h5>MALING LIST</h5>
+          </a>
+        </h6>
+      </div>
+      <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+        <div class="panel-body">            
+          <div>
+            {% include 'newslettersignup' %}
+          </div>
+        </div>
+      </div>
+    </div>
+    <p class="copyright text-right">all rights reserved 2006-2023<br/>
+      Johnny Threads</p>
+  </div>
+
+</footer>

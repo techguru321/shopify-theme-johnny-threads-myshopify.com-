@@ -1,0 +1,33 @@
+<!-- End Wishlist -->  
+<div class="wishlistbox">
+  
+  {% if customer %}
+  {% if display %}
+  <div id="addtowishlist">ADD TO<br>WISHLIST </div>
+  {% else %}
+  <a href="/pages/simplywishlist">GO TO WISHLIST </a>
+  {% endif %}
+  {% else %}
+  <a href="/account/login">ADD TO<br>WISHLIST </a>
+  {% endif %}
+</div>
+<script>
+  $(document).ready(function(){
+    var btn = $('#addtosimplywishlist');
+    if($('#addtosimplywishlist').length > 0){
+      $('.wishlistbox').remove();
+      btn = $('#addtosimplywishlist');
+    }
+    else{
+      $('.wishlistbox').show();
+      btn = $('#addtowishlist');
+    }
+   
+    btn.click(function(){
+      $('#wishform-{{ product.id }}').submit();
+        }); 
+      $('#swlclose').click(function(){        
+		$(this).closest('.wishlistbox').fadeOut();
+      });
+    });
+</script>

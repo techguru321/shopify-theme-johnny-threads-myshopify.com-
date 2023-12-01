@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script>
+  window.simply = window.simply || {};
+  window.cn = function(o){return"undefined"==typeof o||null==o||""==o.toString().trim()};
+</script>
+    <meta name="google-site-verification" content="MsGvukDg6yVAD02OxXJx64HBRAqLAhYWQlANLfd-OzU" />
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    {% if settings.use_favicon %}
+    <link rel="shortcut icon" href="{{ 'favicon.png' | asset_url }}" type="image/png" />
+    {% endif %}
+    <meta charset="utf-8" />
+    <!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1' /><![endif]-->
+    <title>
+      {{ page_title }}{% if current_tags %} &ndash; {{ 'general.meta.tagged' | t }} "{{ current_tags | join: ', ' }}"{% endif %}{% if current_page != 1 %} &ndash; {{ 'general.meta.page' | t }} {{ current_page }}{% endif %}{% unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless %}
+    </title>
+    {% if page_description %}
+    <meta name="description" content="{{ page_description }}" />
+    {% endif %}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="canonical" href="{{ canonical_url }}" /> 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.5.9/slick.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.5.9/slick-theme.min.css"/>
+    {{'font.css'  | asset_url | stylesheet_tag }}    
+    {{ 'bootstrap.scss.css' | asset_url | stylesheet_tag }}    
+    {{ 'styles.scss.css' | asset_url | stylesheet_tag }}
+    {{ 'swatch.css' | asset_url | stylesheet_tag }}
+    {{ 'jquery.bxslider.scss.css' | asset_url | stylesheet_tag }}
+    {{ 'custom.css' | asset_url | stylesheet_tag }}
+    {{ 'custom-responsive.css' | asset_url | stylesheet_tag }}
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family={{ settings.base_font }}:300,400,700">
+    {{ content_for_header }}
+    {{ '//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js' | script_tag }}   
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+    <meta name="google-site-verification" content="MsGvukDg6yVAD02OxXJx64HBRAqLAhYWQlANLfd-OzU" />
+  </head>
+  <body class="{{template}}">
+    {% include 'header' %}
+    {{ content_for_layout }}
+    <!--
+    <a href="#" class="scrollToTop"></a>
+	-->
+    {% include 'footer' %}
+    {% include 'footerscript' %}
+    <script>
+      $(document).ready(function(){
+
+        //Check to see if the window is top if not then display button
+        $(window).scroll(function(){
+          if ($(this).scrollTop() > 100) {
+            $('.scrollToTop').fadeIn();
+          } else {
+            $('.scrollToTop').fadeOut();
+          }
+        });
+
+        //Click event to scroll to top
+        $('.scrollToTop').click(function(){
+          $('html, body').animate({scrollTop : 0},800);
+          return false;
+        });
+
+      });
+    </script>
+    
+
+  </body>
+</html>

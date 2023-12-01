@@ -1,0 +1,31 @@
+<div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
+  <div class="productbox text-center">
+    <div class="product-image text-center">
+      <a href="{{product.url  | within: collection}}">
+        <img src="{{product.featured_image | product_img_url: "large"}}" class="img-responsive product-image-img" alt="{{product.title}}"/> 
+      </a>
+      <div class="hidden">
+        {% if product.images.size > 1 %}
+        <div class="product-photo-thumbs row" id="product-photo-thumbs">
+          {% for image in product.images %}
+          <img src="{{ image | img_url: 'large' }}" alt="{{ image.alt | escape }}" class="img-full img-responsive"/>
+          {% endfor %}
+        </div>
+        {% endif %}
+      </div>
+    </div>
+    <h6><a href="{{product.url  | within: collection}}">{{product.title}}</a></h6>
+    <h6 class="vendor text-muted">{{product.vendor}}</h6>
+    <h6 class='price'>{% include 'price' %}</h6>
+    <div class="h6 color-secondary title">
+      {% if product.available and product.variants.size > 0 %}
+      {% for option in product.options %}      
+      {% if option contains 'color' or option contains 'Color' %}
+      {% include 'swatch' with option %}
+      {% endif %}
+      {% endfor %}
+      {% endif %}
+    </div>
+  </div>
+</div>
+

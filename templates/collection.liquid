@@ -1,0 +1,169 @@
+<div id="collection">
+
+  {% assign bExist = "false" %}
+  {% assign h = "" %}
+  {% assign title =""%}
+  {% assign subtitle =""%}
+  {% for link in linklists['submenulinks'].links %}
+  {% assign handle = link.title | handleize %}    
+  {% for sublink in linklists[handle].links %}
+  {% assign subhandle = sublink.object.handle %}          
+  {% if subhandle == collection.handle %}    
+  {% assign title = link.title%}
+  {% assign subtitle =  sublink.title%}
+  {% assign h = handle %}
+  {% assign bExist = "true" %}
+  {% endif %}
+  {% endfor %}	
+  {% endfor %}
+
+  {% if bExist contains 'true'%}
+  <!-- Begin collection info -->
+  <div class="text-center">
+    <div class="heading">
+      {% assign c = collections[h] %}      
+      {% if c and c.image %}
+      <img src="{{ c | img_url: 'master' }}"  alt="{{ c.title | escape }}" display="block" class="img-responsive collection_img" />
+      {% else %}
+            <br/>
+      {% endif %} 
+      
+      
+      
+    </div>
+
+   <div class="heading_top">
+      <h1>{{title}}</h1>
+      <div class="subtitle"><h5>{{subtitle}}</h5> </div>
+    </div>
+    <ul class="subcollection">
+      {% for sublink in linklists[h].links %}
+      <li class="{% if sublink.active %} active {% endif %}"><a class="{% if sublink.active %} active {% endif %}" href="{{sublink.url}}">{{sublink.title}}</a></li>
+      {% endfor %}	
+    </ul>
+  </div>
+  {% else %}
+
+    <div class="text-center">
+    {% if collection.title contains 'Mens - ' %}
+    
+    <h1>Mens</h1>
+    <h5>{{collection.title | replace : 'Mens - ', ''}}</h5>
+    {% elsif collection.title contains 'Womens - ' %}
+    <h1>Womens</h1>
+    <h5>{{collection.title | replace : 'Womens - ', ''}}</h5>      
+    {% else %}
+      
+    
+   
+     {% if collection.image %}
+  <img class="collection-banner" src="{{ collection | img_url: '1400x' }}" alt="{{ collection.title }}" />
+{% endif %}
+      <div class="text-center">
+    <ul class="subcollection no-subcollection">
+      {% for sublink in linklists[h].links %}
+      <li class="{% if sublink.active %} active {% endif %}"><a class="{% if sublink.active %} active {% endif %}" href="{{sublink.url}}">{{sublink.title}}</a></li>
+      {% endfor %}	
+    </ul>
+  </div>   
+    <h1 class="collection-header">{{collection.title}}</h1>
+    {% endif %}
+   
+  </div>
+  
+  
+  
+  
+  {% endif %}
+  <div class="container">
+    <div class="hidden-xs">
+      <div class="text-right">
+        <label for="sort-by"></label> 
+        <select id="sort-by">
+          <option value="title-ascending">Sort by</option>
+          <option value="manual">Featured</option>
+          <option value="price-ascending">Price: Low to High</option>
+          <option value="price-descending">Price: High to Low</option>
+          <option value="title-ascending">A-Z</option>
+          <option value="title-descending">Z-A</option>
+          <option value="created-ascending">Oldest to Newest</option>
+          <option value="created-descending">Newest to Oldest</option>
+          <option value="best-selling">Best Selling</option>
+        </select>
+      </div>
+    </div>
+    <div class="visible-xs">
+      <div class="product-qucik-search">
+        <div class="product-qucik-search">
+          <ul>
+            <li><a href="#" value="created-ascending">Newest</a>
+            </li>
+            <li><a href="#" value="created-descending">Price: High To Low</a>
+            </li>
+            <li><a href="#" value="price-descending">Price: Low To High</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <script>
+      Shopify.queryParams = {};
+      if (location.search.length) {
+        for (var aKeyValue, i = 0, aCouples = location.search.substr(1).split('&'); i < aCouples.length; i++) {
+          aKeyValue = aCouples[i].split('=');
+          if (aKeyValue.length > 1) {
+            Shopify.queryParams[decodeURIComponent(aKeyValue[0])] = decodeURIComponent(aKeyValue[1]);
+          }
+        }
+      }
+      jQuery('.product-qucik-search li a').click(function(){
+        Shopify.queryParams.sort_by = jQuery(this).attr('value');
+        location.search = jQuery.param(Shopify.queryParams).replace(/\+/g, '%20');
+      });
+      jQuery('#sort-by')
+      .val('{{ collection.sort_by | default: collection.default_sort_by | escape }}')
+           .bind('change', function() {
+        Shopify.queryParams.sort_by = jQuery(this).val();
+        location.search = jQuery.param(Shopify.queryParams).replace(/\+/g, '%20');
+      });
+    </script>
+    {% paginate collection.products by 36 %}
+
+    <div class="row products" id="productsloop">
+      {% for product in collection.products %}
+      {% include 'product-loop' with collection.handle %}
+      {% endfor %}
+    </div>
+    <div class="text-center">
+      {{ paginate | default_pagination }}
+    </div>
+    {% endpaginate %}
+  </div>
+  
+  <div class="text-center top-button">
+        <a href="#navbar" class="btn btn-default backtotop">BACK TO TOP</a>
+      </div>
+  
+  <div class="mostlikedslider">
+    <div class="home_banner text-center">
+      <h5>TOP SELLING PRODUCTS</h5>
+    </div>
+    <!-- Start products -->
+    <div class="container">
+      <div class="carouselproducts">
+        <div class="bxslider">    
+          {% assign topsellingcollection = collections['topselling'] %}
+          {% for p in collections['topselling'].products limit: 15 %}        
+          <div class="col-xs-">
+            <a href="{{p.url | within: topsellingcollection }}" {{topsellingcollection}}>
+              <img src="{{p.featured_image | img_url: 'medium'}}" class="img-responsive" />
+            </a>
+          </div>
+          {% endfor %} 
+        </div>
+      </div>
+      
+    </div>
+
+  </div>
+</div>

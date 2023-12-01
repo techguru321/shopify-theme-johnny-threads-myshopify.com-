@@ -1,0 +1,403 @@
+[
+  {
+    "name": "Logos, colors, fonts & more",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Logo and icon settings"
+      },
+      {
+        "type": "checkbox",
+        "id": "use_logo",
+        "label": "Use custom logo?"
+      },
+      {
+        "type": "image",
+        "id": "logo.png"
+      },
+      {
+        "type": "checkbox",
+        "id": "use_favicon",
+        "label": "Use custom icon? (16px x 16px)"
+      },
+      {
+        "type": "image",
+        "id": "favicon.png",
+        "max-width": 16,
+        "max-height": 16
+      },
+      {
+        "type": "header",
+        "content": "Colors"
+      },
+      {
+        "type": "color",
+        "id": "shop_bg_color",
+        "label": "Background color",
+        "default": "#ffffff"
+      },
+      {
+        "type": "color",
+        "id": "body_font_color",
+        "label": "Text color",
+        "default": "#555555"
+      },
+      {
+        "type": "color",
+        "id": "brand_primary_color",
+        "label": "Brand primary color",
+        "default": "#337ab7"
+      },
+      {
+        "type": "header",
+        "content": "Font options"
+      },
+      {
+        "type": "text",
+        "id": "base_font",
+        "label": "Body text font"
+      }
+    ]
+  },
+  {
+    "name": "Navigation",
+    "settings": [
+      {
+        "type": "link_list",
+        "id": "main_nav",
+        "label": "Navigation"
+      }
+    ]
+  },
+  {
+    "name": "Homepage",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Slideshow banner"
+      },
+      {
+        "type": "paragraph",
+        "content": "For best results, upload images that are at least 966px wide. Try to keep your slideshow images the same size."
+      },
+      {
+        "type": "paragraph",
+        "content": "Slide #1"
+      },
+      {
+        "type": "checkbox",
+        "id": "slide_1",
+        "label": "Show?"
+      },
+      {
+        "type": "image",
+        "id": "slideshow_1.jpg",
+        "label": "Image"
+      },
+      {
+        "type": "text",
+        "id": "slide_1_link",
+        "label": "Links to",
+        "default": "\/collections\/all"
+      },
+      {
+        "type": "paragraph",
+        "content": "Slide #2"
+      },
+      {
+        "type": "checkbox",
+        "id": "slide_2",
+        "label": "Show?"
+      },
+      {
+        "type": "image",
+        "id": "slideshow_2.jpg",
+        "label": "Image"
+      },
+      {
+        "type": "text",
+        "id": "slide_2_link",
+        "label": "Links to",
+        "default": "\/collections\/all"
+      },
+      {
+        "type": "paragraph",
+        "content": "Slide #3"
+      },
+      {
+        "type": "checkbox",
+        "id": "slide_3",
+        "label": "Show?"
+      },
+      {
+        "type": "image",
+        "id": "slideshow_3.jpg",
+        "label": "Image"
+      },
+      {
+        "type": "text",
+        "id": "slide_3_link",
+        "label": "Links to"
+      },
+      {
+        "type": "paragraph",
+        "content": "Slide #4"
+      },
+      {
+        "type": "checkbox",
+        "id": "slide_4",
+        "label": "Show?"
+      },
+      {
+        "type": "image",
+        "id": "slideshow_4.jpg",
+        "label": "Image"
+      },
+      {
+        "type": "text",
+        "id": "slide_4_link",
+        "label": "Links to"
+      },
+      {
+        "type": "header",
+        "content": "Homepage products"
+      },
+      {
+        "type": "collection",
+        "id": "frontpage_collection",
+        "label": "Collection to feature products from"
+      }
+    ]
+  },
+  {
+    "name": "Homepage image block",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Top Bar"
+      },
+      {
+        "type": "text",
+        "id": "ad_1_bar_text",
+        "label": "Bar Text"
+      },
+      {
+        "type": "text",
+        "id": "ad_1_bar_link",
+        "label": "Bar Link"
+      },
+      {
+        "type": "header",
+        "content": "Homepage image 2"
+      },
+      {
+        "type": "image",
+        "id": "ad_2_bar_img.png",
+        "label": "Image"
+      },
+      {
+        "type": "text",
+        "id": "ad_2_bar_link",
+        "label": "Link"
+      }
+    ]
+  },
+  {
+    "name": "Footer",
+    "settings": [
+      {
+        "type": "link_list",
+        "id": "footer1",
+        "label": "Footer Navigation 1"
+      },
+      {
+        "type": "link_list",
+        "id": "footer2",
+        "label": "Footer Navigation 2"
+      },
+      {
+        "type": "link_list",
+        "id": "footer3",
+        "label": "Footer Navigation 3"
+      },
+      {
+        "type": "text",
+        "id": "twitter_link",
+        "label": "Twitter link"
+      },
+      {
+        "type": "text",
+        "id": "facebook_link",
+        "label": "Facebook link"
+      },
+      {
+        "type": "text",
+        "id": "google_link",
+        "label": "Google+ link"
+      },
+      {
+        "type": "text",
+        "id": "youtube_link",
+        "label": "Youtube link"
+      },
+      {
+        "type": "text",
+        "id": "vimeo_link",
+        "label": "Vimeo link"
+      },
+      {
+        "type": "text",
+        "id": "pinterest_link",
+        "label": "Pinterest link"
+      },
+      {
+        "type": "text",
+        "id": "instagram_link",
+        "label": "Instagram link"
+      },
+      {
+        "type": "text",
+        "id": "tumblr_link",
+        "label": "Tumblr link"
+      },
+      {
+        "type": "text",
+        "id": "atom_link",
+        "label": "Blog feed"
+      }
+    ]
+  },
+  {
+    "name": "Banner",
+    "settings": [
+      {
+        "type": "image",
+        "id": "banner1.jpg",
+        "label": "Banner1 (587px max width)",
+        "max-width": 600
+      },
+      {
+        "type": "text",
+        "id": "banner1",
+        "label": "Link for home banner",
+        "default": "\/collections\/all"
+      },
+      {
+        "type": "image",
+        "id": "mobilebanner1.jpg",
+        "label": "mobilebanner1 (587px max width)",
+        "max-width": 600
+      },
+      {
+        "type": "text",
+        "id": "mobilebanner1",
+        "label": "Link for home banner",
+        "default": "\/collections\/all"
+      },
+      {
+        "type": "image",
+        "id": "mobilebanner2.jpg",
+        "label": "mobilebanner2 (587px max width)",
+        "max-width": 600
+      },
+      {
+        "type": "text",
+        "id": "mobilebanner2",
+        "label": "Link for home banner",
+        "default": "\/collections\/all"
+      },
+      {
+        "type": "image",
+        "id": "banner2.jpg",
+        "label": "Banner2 (587px max width)",
+        "max-width": 600
+      },
+      {
+        "type": "text",
+        "id": "banner2",
+        "label": "Link for home banner",
+        "default": "\/collections\/all"
+      },
+      {
+        "type": "image",
+        "id": "banner3.jpg",
+        "label": "Banner3 (587px max width)",
+        "max-width": 600
+      },
+      {
+        "type": "text",
+        "id": "banner3",
+        "label": "Link for home banner",
+        "default": "\/collections\/all"
+      },
+      {
+        "type": "checkbox",
+        "id": "bannerimage",
+        "label": "Show Banner Images"
+      },
+      {
+        "type": "image",
+        "id": "banner4.jpg",
+        "label": "Banner1 (587px max width)",
+        "max-width": 600
+      },
+      {
+        "type": "text",
+        "id": "banner4",
+        "label": "Link for home banner",
+        "default": "\/collections\/all"
+      },
+      {
+        "type": "image",
+        "id": "banner5.jpg",
+        "label": "Banner2 (587px max width)",
+        "max-width": 600
+      },
+      {
+        "type": "text",
+        "id": "banner5",
+        "label": "Link for home banner",
+        "default": "\/collections\/all"
+      },
+      {
+        "type": "image",
+        "id": "banner6.jpg",
+        "label": "Banner2 (587px max width)",
+        "max-width": 600
+      },
+      {
+        "type": "text",
+        "id": "banner6",
+        "label": "Link for home banner",
+        "default": "\/collections\/all"
+      }
+    ]
+  },
+  {
+    "name": "Desktop",
+    "settings": [
+      {
+        "type": "image",
+        "id": "desktopmen.png",
+        "label": "desktop men"
+      },
+      {
+        "type": "text",
+        "id": "desktopmen_link",
+        "label": "Link for Men banner",
+        "default": "\/collections\/all"
+      },
+      {
+        "type": "image",
+        "id": "desktopwommen.jpg",
+        "label": "desktop women"
+      },
+      {
+        "type": "text",
+        "id": "desktopwomen_link",
+        "label": "Link for women banner",
+        "default": "\/collections\/all"
+      }
+    ]
+  }
+]
