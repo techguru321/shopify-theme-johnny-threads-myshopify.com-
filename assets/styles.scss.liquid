@@ -40,9 +40,9 @@ body {
   text-transform:uppercase;
 }
 
-.navbar,.dropdown, .nav>li{
-  position:static;
-}
+// .navbar,.dropdown, .nav>li{
+//   position:static;
+// }
 .navbar-brand {  
   height: auto;
   padding:0px;
@@ -326,7 +326,8 @@ body {
 li.dropdown:hover {
   .dropdown-menu {
     @media (min-width: 868px){
-      display: block;
+      display: flex;
+      justify-content: space-between;
     }
   }
 

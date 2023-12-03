@@ -128,7 +128,9 @@ var switchImage = function(newImageSrc, newImage, mainImageDomEl) {
   {% endif %}
 };
 
-
+var megaMenuImageUpdate = function(newImageSrc) {
+  $('.mega-menu-image').attr('src', newImageSrc);
+}
 
 var $window = $(window);
 
@@ -337,7 +339,10 @@ jQuery(document).ready(function($){
     }
   });
 
-
+  $('div.dropdown-menu > ul > li').mouseover(function () {
+    var src = $(this).data('src');
+    megaMenuImageUpdate(src);
+  })
 });
 
 function fbwindowOpen(){

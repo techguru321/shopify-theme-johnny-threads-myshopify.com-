@@ -103,21 +103,26 @@
           {% if linklists[link.handle].links.size > 0 %}
           <li class="dropdown ">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{link.title}}</a>
-            <ul class="dropdown-menu" role="menu">
-              <div class="temp-div"></div>
-              {% for sublink in linklists[link.handle].links %}
-              <li class="{% if sublink.active %} active {% endif %}">
-                <div>                                    
-                  {% assign  c = collections[sublink.object.handle] %}
-                  {% if c.image %}
-                  <a href="{{sublink.url}}">{{ c.image.src | collection_img_url: 'medium' | img_tag: c.title }}</a>
-                  {% else %}
-                  <a href="{{sublink.url}}">{{ c.products.first.featured_image.src | product_img_url: 'medium' | img_tag: c.title }}</a>
-                  {% endif %}
-                </div>            
-              </li>        
-              {% endfor %}
-            </ul>
+            <div class="dropdown-menu" role="menu">
+              <ul>
+              {% for sublink in linklists[link.handle].links %}  
+                {% assign collection = collections[sublink.object.handle] %}
+                {% if collection.image %}
+                  {% assign src = collection.image.src | collection_img_url: 'medium' %}
+                {% else %}
+                  {% assign src = collection.products.first.featured_image.src | product_img_url: 'medium' %}
+                {% endif %}
+
+                {% if forloop.index0 == 0 %}
+                  {% assign firstSrc = src %}
+                {% endif %}
+                <li class="{% if sublink.active %} active {% endif %}" data-src="{{ src }}">
+                  <a href="{{ sublink.url }}">{{ collection.title }}</a>
+                </li>
+              {% endfor %}  
+              </ul>
+              <img class="mega-menu-image" src="{{ firstSrc }}" alt="{{ collection.title }}" />
+            </div>
           </li>
           {% else %}
           <li class="{% if link.active %} active {% endif %}"><a href="{{link.url}}">{{link.title}}</a></li>        
@@ -208,6 +213,6 @@
     </form>
   </div>
 </div>
-<div class="header-space text-center {{template}} hidden-xs">
+{% comment %} <div class="header-space text-center {{template}} hidden-xs">
   <a class="top_text" href="{{settings.ad_1_bar_link}}">{{settings.ad_1_bar_text}}</a>
-</div>
+</div> {% endcomment %}
