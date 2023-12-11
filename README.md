@@ -8,7 +8,7 @@ The following are the main customizations made to the original theme:
 ## How to Use
 1. **Installation**: Clone this repository to your local environment.
 ```bash
-git clone https://github.com/your-username/your-shopify-theme.git
+git clone https://github.com/techguru321/shopify-theme-johnny-threads-myshopify.com-.git
 ```
 2. **Customization**: Make any additional customizations or adjustments as needed.
 3. **Testing**: Test the theme thoroughly to ensure that all customizations work as expected.
